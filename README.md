@@ -1,1 +1,2 @@
 # KotlinHell
+пакет называется Journal
