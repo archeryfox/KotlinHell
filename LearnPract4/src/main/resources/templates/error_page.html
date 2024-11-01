@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибчка!(((</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center p-3 justify-center mt-[1.5rem] mx-[5rem]">
+<div class="bg-white shadow-md rounded-lg p-8 min-w-30 mx-auto">
+    <h1 class="text-4xl font-bold text-red-600 mb-0">Опа опа! Ошибочкэ вылез...</h1>
+
+    <!-- Путь и статус -->
+    <p class="text-xl text-gray-800">Статус код:
+        <span class="font-semibold text-red-500" th:text="${status}"></span>
+    </p>
+    <p class="text-lg text-gray-700 font-bold mb-6">Ошибкэ с путём:
+        <span class="font-semibold text-gray-900" th:text="${path}"></span>
+        ('<span class="text-red-500" th:text="${errorPath}"></span>')
+    </p>
+
+    <!-- Сообщение об ошибке -->
+    <div class="mb-6">
+        <p class="text-gray-600">Сообщение ошибки:</p>
+        <p class="text-gray-900 font-semibold" th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Список всех доступных эндпоинтов -->
+    <h2 class="text-lg font-semibold mb-4 text-blue-600">Доступные эндпоинты приложения:</h2>
+    <ul class="list-disc pl-5 mb-6">
+        <li th:each="endpoint : ${allEndpoints}">
+            <a th:text="${endpoint}" class="member-name-link" th:href="${endpoint}"></a>
+        </li>
+    </ul>
+
+    <!-- Стек вызовов -->
+    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+        <h2 class="text-lg font-semibold mb-2 text-gray-700">Биг тррейс ошибки:</h2>
+        <pre class="text-sm text-gray-600 overflow-x-auto whitespace-pre-wrap" th:text="${trace}"></pre>
+    </div>
+
+    <!-- Ссылка для возврата на главную -->
+    <div class="mt-6">
+        <a href="/" class="text-blue-500 hover:underline">На Гглавную</a>
+    </div>
+</div>
+</body>
+</html>

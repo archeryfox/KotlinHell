@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="bg-white p-8 rounded-lg shadow-md w-96">
+    <h1 class="text-2xl font-bold mb-4 text-center">Калькулятор</h1>
+    <form action="/calculate" method="post">
+        <input type="number" name="num1" required placeholder="Число 1" class="border border-gray-300 p-2 rounded w-full mb-4">
+        <select name="operation" class="border border-gray-300 p-2 rounded w-full mb-4">
+            <option value="add">Сложение</option>
+            <option value="subtract">Вычитание</option>
+            <option value="multiply">Умножение</option>
+            <option value="divide">Деление</option>
+        </select><br>
+        <input type="number" name="num2" required placeholder="Число 2" class="border border-gray-300 p-2 rounded w-full mb-4"><br>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600">Вычислить</button>
+    </form>
+</div>
+</body>
+</html>
