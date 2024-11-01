@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список студентов</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Список студентов</h1>
+
+    <!-- Форма для добавления студента -->
+    <form action="/students/add" method="post" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <input type="text" name="name" placeholder="Имя" required class="p-2 mx-4 border border-gray-300 rounded"/>
+            <input type="text" name="lastName" placeholder="Фамилия" required
+                   class="p-2 mx-4 border border-gray-300 rounded"/>
+            <input type="text" name="firstName" placeholder="Отчество" class="p-2 mx-4 border border-gray-300 rounded"/>
+            <input type="text" name="middleName" placeholder="Доп. имя"
+                   class="p-2 mx-4 border border-gray-300 rounded"/>
+            <select name="courseId" required class="mx-4 border border-gray-300 rounded">
+                <th:block th:each="course : ${courses}">
+                    <option th:value="${course.id}" th:text="${course.name}"></option>
+                </th:block>
+            </select>
+        </div>
+        <button type="submit" class="mt-4 bg-blue-500 text-white p-2 mx-4 rounded hover:bg-blue-600">Добавить студента
+        </button>
+    </form>
+
+    <!-- Форма для фильтрации студентов -->
+    <form action="/students/search" method="post" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <input type="text" name="name" placeholder="Имя" class="p-2 border border-gray-300 rounded"/>
+            <input type="text" name="lastName" placeholder="Фамилия" class="p-2 border border-gray-300 rounded"/>
+            <input type="text" name="course" placeholder="Курс" class="p-2 border border-gray-300 rounded"/>
+        </div>
+        <button type="submit" class="mt-4 bg-green-500 text-white p-2 rounded hover:bg-green-600">Фильтровать</button>
+    </form>
+
+    <!-- Форма для множественного удаления -->
+    <h2 class="text-2xl font-semibold mb-4">Все студенты:</h2>
+    <ul class="space-y-4 w-full">
+        <form action="/students/deleteMultiple" method="post" class="mb-6 p-2 bg-white">
+            <th:block th:each="student : ${students}">
+                <br>
+                <input type="checkbox" name="ids" th:value="${student.id}" class="mr-4"/>
+                <span th:text="${student.name} + ' ' + ${student.lastName} + ' ' + ${student.firstName} + ' ' + ${student.middleName} + ' (Курсы: ' + (${student.getCourseNames()}) + ')'"></span>
+            </th:block>
+            <br>
+                <button type="submit" class="mt-4 bg-red-500 text-white p-2 rounded hover:bg-red-600">Удалить выбранные</button>
+        </form>
+        <th:block th:each="student : ${students}">
+            <li class="w-full  bg-white p-4 rounded shadow">
+                <div class="flex space-x-2">
+                    <!-- Форма для обновления студента -->
+                    <form action="/students/update" method="post"
+                          class="flex items-center bg-white p-4  justify-around rounded w-full">
+                        <input type="hidden" name="id" th:value="${student.id}"/>
+                        <input type="text" name="name" placeholder="Имя" th:value="${student.name}" required
+                               class="p-1  m-1 border border-gray-300 rounded"/>
+                        <input type="text" name="lastName" placeholder="Фамилия" th:value="${student.lastName}"
+                               required class="p-1  m-1 border border-gray-300 rounded"/>
+                        <input type="text" name="firstName" placeholder="Отчество" th:value="${student.firstName}"
+                               class="p-1 m-1  border border-gray-300 rounded"/>
+                        <input type="text" name="middleName" placeholder="Доп. имя" th:value="${student.middleName}"
+                               class="p-1 m-1  border border-gray-300 rounded"/>
+
+                        <select name="course" required class="p-1 border border-gray-300 rounded">
+                                <option th:value="${student.courseId.id}" th:text="${student.courseId.name}"></option>
+                            <th:block th:each="course : ${courses}"
+                                      th:if="${course.id} != ${student.courseId.id}">
+                                <option th:value="${course.id}" th:text="${course.name}"></option>
+                            </th:block>
+                        </select>
+                        <button type="submit"
+                                class="bg-yellow-500 text-white p-1 rounded hover:bg-red-600">Обновить
+                        </button>
+                        <button type="submit" formaction="/students/delete"
+                                class="bg-red-500 text-white p-1 rounded hover:bg-yellow-600">DEL
+                        </button>
+                    </form>
+                </div>
+            </li>
+        </th:block>
+    </ul>
+
+    <!-- Пагинация -->
+    <div class="mt-6 flex justify-between items-center">
+        <form action="/students/page" method="get" class="flex items-center">
+            <label for="page" class="mr-2">Страница:</label>
+            <input type="number" name="page" value="1" min="1" class="p-2 border border-gray-300 rounded"/>
+            <label for="pageSize" class="ml-4 mr-2">Элементов на странице:</label>
+            <input type="number" name="pageSize" value="10" min="1" class="p-2 border border-gray-300 rounded"/>
+            <button type="submit" class="ml-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Перейти</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
