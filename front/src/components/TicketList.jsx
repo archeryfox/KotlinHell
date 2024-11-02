@@ -29,7 +29,7 @@ const TicketList = () => {
                 {ticketStore.tickets.map(ticket => (
                     <li key={ticket.id}>
                         {ticket.event?.name} - {ticket.price} Руб {/* Используем безопасный доступ для event */}
-                        <p>Для: {ticket.user?.name}</p>
+                        <p>Для: {ticket.user?.username}</p>
                         <button onClick={() => handleEditClick(ticket.id)}>Edit</button>
                         <button onClick={() => ticketStore.deleteTicket(ticket.id)}>Delete</button>
                     </li>
