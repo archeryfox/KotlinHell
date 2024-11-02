@@ -11,7 +11,7 @@ const UserForm = ({ userId, onClose }) => {
         if (userId) {
             const user = userStore.users.find(u => u.id === userId);
             if (user) {
-                setName(user.name);
+                setName(user.username);
                 setLastName(user.lastName);
                 setEmail(user.email);
             }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CategoryRepository : JpaRepository<Category, Long> {
-    // Можно добавить кастомные методы для поиска, если понадобится
+    // Добавьте методы поиска при необходимости, например, findByName
+    fun findByName(name: String): Category?
 }
-    
