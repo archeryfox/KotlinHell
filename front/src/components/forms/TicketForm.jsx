@@ -57,10 +57,11 @@ const TicketForm = ({ ticketId, onClose }) => {
                     <option key={event.id} value={event.id}>{event.name}</option>
                 ))}
             </select>
+                {/*{JSON.stringify(userStore?.users)}*/}
             <select value={userId} onChange={(e) => setUserId(e.target.value)} required>
                 <option value="">Select User</option>
-                {userStore.users.map(user => (
-                    <option key={user.id} value={user.id}>{user.name}</option>
+                {userStore?.users.map(user => (
+                    <option key={user.id} value={user.id}>{user?.username}</option>
                 ))}
             </select>
             <button type="submit">{ticketId ? 'Update' : 'Create'} Ticket</button>

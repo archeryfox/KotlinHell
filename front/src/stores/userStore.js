@@ -7,7 +7,7 @@ const useUserStore = create((set) => ({
         const response = await axios.get('http://localhost:8080/users'); // Исправлено на правильный URL
         set({ users: response.data._embedded.users.map(user => ({
                 id: user._links.self.href.split('/').pop(), // Извлекаем id из ссылки
-                name: user.name,
+                username: user.username,
                 email: user.email,
             })) });
     },

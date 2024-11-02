@@ -16,9 +16,22 @@ class UserService(private val userRepository: UserRepository) {
 
     fun createUser(user: User): User = userRepository.save(user)
 
+    fun registerUser(user: User): User {
+        // Проверка на существование пользователя
+        userRepository.findByUsername(user.username)?.let {
+            throw IllegalArgumentException("User already exists")
+        }
+        return userRepository.save(user)
+    }
+
+    fun authenticateUser(username: String, password: String): Boolean {
+        val user = userRepository.findByUsername(username)
+        return user != null && user.password == password
+    }
+
     fun updateUser(id: Long, updatedUser: User): User {
         val user = getUserById(id)
-        return userRepository.save(user.copy(name = updatedUser.name, email = updatedUser.email))
+        return userRepository.save(user.copy(username = updatedUser.username, email = updatedUser.email))
     }
 
     fun deleteUser(id: Long) {
@@ -30,5 +43,5 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun searchUsers(name: String, pageable: Pageable): Page<User> =
-        userRepository.findByNameContainingIgnoreCase(name, pageable)
+        userRepository.findByUsernameContainingIgnoreCase(name, pageable)
 }

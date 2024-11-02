@@ -13,11 +13,15 @@ data class User(
 
     @field:NotBlank(message = "User name is required")
     @Column(nullable = false)
-    val name: String = "",
+    val username: String = "",
 
     @field:NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true)
     val email: String = "",
+
+    @field:NotBlank(message = "Password is required")
+    @Column(nullable = false)
+    val password: String = "",
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonIgnore // Исключаем бесконечные циклы

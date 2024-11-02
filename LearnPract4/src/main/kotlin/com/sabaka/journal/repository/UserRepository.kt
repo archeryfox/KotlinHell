@@ -6,5 +6,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository : JpaRepository<User, Long> {
-    fun findByNameContainingIgnoreCase(name: String, pageable: Pageable): Page<User>
+    fun findByUsername(username: String): User?
+    fun findByUsernameContainingIgnoreCase(name: String, pageable: Pageable): Page<User>
 }
